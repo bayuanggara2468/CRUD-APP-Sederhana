@@ -43,7 +43,64 @@ const getData = async (req, res) => {
 	}
 };
 
+// Get Data By Id
+const getDataById = async (req, res) => {
+	try {
+		// Get Id Not Exist
+		const ID = await studentModel.findOne({ _id: req.params.id });
+		if (!ID) {
+			return res.status(400).json({
+				message: responseDefault.ID_NOT_FOUND,
+			});
+		}
+
+		const response = await studentModel.findById(req.params.id);
+		res.status(200).json({
+			data: response,
+		});
+	} catch (error) {
+		console.log(error);
+	}
+};
+
+// Get Data By Id And Update
+const updateData = async (req, res) => {
+	const id = req.params.id;
+	const body = req.body;
+	try {
+		// Get Id Not Found
+		const ID = await studentModel.findOne({ _id: req.params.id });
+		if (!ID) {
+			return res.status(400).json({
+				message: responseDefault.ID_NOT_FOUND,
+			});
+		}
+
+		await studentModel.findByIdAndUpdate({ _id: id }, { $set: body });
+		res.status(200).json({
+			message: responseDefault.DATA_UPDATED,
+		});
+	} catch (error) {
+		console.log(error);
+	}
+};
+
+// Get Data By Id Delete Data
+const deleteData = async (req, res) => {
+	try {
+		await studentModel.findByIdAndDelete(req.params.id);
+		res.status(200).json({
+			message: responseDefault.DATA_DELETED,
+		});
+	} catch (error) {
+		console.log(error);
+	}
+};
+
 module.exports = {
 	addData,
 	getData,
+	getDataById,
+	updateData,
+	deleteData,
 };
