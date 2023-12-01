@@ -10,6 +10,10 @@ database();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.get("/", (req, res) => {
+	res.setHeader("Acces-Control-Allow-Credentials", "true");
+	res.send("API is running..")
+})
 
 // Route
 const studentRoute = require("./routes/studentRoute");
@@ -22,10 +26,3 @@ app.listen(PORT, () => {
 	console.log(`Server running on http://localhost:${PORT}`);
 });
 
-// ADD DATA STUDENT : DONE
-// GET DATA STUDENT : DONE
-// VALIDATION DATA STUDENT : DONE
-// ADD DATA DOSEN : DONE
-// GET DATA DOSEN : DONE
-// VALIDATION DATA DOSEN : BELUM DONE
-// YT : 44:16 - NGODING MASTERY MERN STACK
